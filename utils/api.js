@@ -10,7 +10,7 @@ export const Get = async (url, config = {}) => {
     return response.data;
   } catch (error) {
     throw new Error("Failed to perform GET request");
-  }
+  
 };
 
 export const GetById = async (url, config = {}) => {
