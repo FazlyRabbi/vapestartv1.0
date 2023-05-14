@@ -31,6 +31,7 @@ export const httpPost = async (url, data = {}, config = {}) => {
   }
 };
 
+
 export const httpPut = async (url, data = {}, config = {}) => {
   try {
     const response = await apiClient.put(url, data, config);
@@ -39,6 +40,7 @@ export const httpPut = async (url, data = {}, config = {}) => {
     throw new Error("Failed to perform PUT request");
   }
 };
+
 
 export const httpDelete = async (url, id) => {
   try {
