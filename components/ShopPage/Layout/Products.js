@@ -9,6 +9,7 @@ import DisposableVape from "../DisposableVape";
 import NewCollections from "../NewCollections";
 import VapeMod from "../VapeMod";
 function Products() {
+  
   const { productsQuery } = useContext(ProductsContext);
   const { data, isLoading, isError } = productsQuery;
 

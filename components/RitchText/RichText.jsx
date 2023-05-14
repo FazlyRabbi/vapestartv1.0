@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 
@@ -7,34 +7,30 @@ const ReactQuill = dynamic(() => import("react-quill"), {
 });
 
 const toolbarOptions = [
-    [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ 'color': [] }, { 'background': [] }],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],
-    ['link', 'image',],
-    ['clean']
-  ];
+  [{ header: [1, 2, false] }],
+  ["bold", "italic", "underline", "strike"],
+  [{ color: [] }, { background: [] }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ script: "sub" }, { script: "super" }],
+  ["link", "image"],
+  ["clean"],
+];
 
-
-function RichText() {
-  const [value, setValue] = useState("");
-
+function RichText({ setProduct, product }) {
   const handleValueChange = (newValue) => {
-    setValue(newValue);
+    setProduct({ ...product, description: newValue });
   };
 
   return (
     <>
       <ReactQuill
-
-        value={value}
-        className="h-[15rem] border-b-2"
+        value={product.description}
+        className="h-[11rem] min-h-[5rem]  mb-2"
         onChange={handleValueChange}
         modules={{ toolbar: toolbarOptions }}
         placeholder="Type something here..."
       />
-      <div dangerouslySetInnerHTML={{ __html: value }} />
+      {/* <div dangerouslySetInnerHTML={{ __html: value }} /> */}
     </>
   );
 }

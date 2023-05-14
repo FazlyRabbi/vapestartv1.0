@@ -6,13 +6,14 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import http from "utils/api";
 import Image from "next/image";
 import { useQuery } from "react-query";
-import axios from "axios";
+
 
 import p1 from "../../../img/p1.jpg";
 
 function LeftSideContainer() {
   const [open, setOpen] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState(true);
+
   const { data, isLoading, isError } = useQuery("myData", fetchData);
 
   if (isLoading) {

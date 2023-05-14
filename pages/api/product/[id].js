@@ -46,6 +46,18 @@ router
     } catch (err) {
       res.status(404).json({ status: "fail", message: err.message });
     }
+  })
+  .delete(async (req, res) => {
+    try {
+      const { id } = req.query;
+
+      await cloudinary.v2.uploader.destroy(id);
+
+      const result = await Product.deleteOne({ _id: id });
+      res.status(200).json({ ok: true, message: "Image deleted successfully" });
+    } catch (err) {
+      res.status(500).json({ ok: false, message: err.message });
+    }
   });
 
 export default router.handler({

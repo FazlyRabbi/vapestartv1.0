@@ -54,14 +54,17 @@ router
     try {
       let files = Object.values(req.files).flat();
 
+      const data = JSON.parse(req.body.data);
+      console.log(data.category);
+
       for (const file of files) {
         const result = await uploadToCloudinary(file.tempFilePath);
         images.push(result);
       }
 
       const product = await Product({
-        ...req.body,
-        category: req.body.category,
+        ...data,
+        category: data.category,
         imgUrl: images[0].url,
       });
 
@@ -69,24 +72,13 @@ router
 
       // upload product
       res.status(200).json({
-        status: "success",
+        ok: true,
         message: "product inserted successfully!",
         data: result,
       });
     } catch (err) {
-      await cloudinary.v2.uploader.destroy(images[0].public_url);
-      res.status(500).json({ status: "fail", message: err.message });
-    }
-  })
-  .delete(async (req, res) => {
-    try {
-      const { public_id } = req.body;
-
-      const result = await cloudinary.v2.uploader.destroy(public_id);
-      console.log(result);
-      res.status(200).json({ message: "Image deleted successfully" });
-    } catch (err) {
-      res.status(500).json({ status: "fail", message: err.message });
+      // await cloudinary.v2.uploader.destroy(images[0].public_url);
+      res.status(500).json({ ok: false, message: err.message });
     }
   });
 
