@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* input[type="file"] {
+  display: none;
+} */
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Economica', sans-serif;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:active,
+:hover,
+:focus {
+  outline: 0 !important;
+  outline-offset: 0;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: var(--text-color);
+}
+ul,
+li {
+  list-style: none;
+  cursor: pointer;
+}
+
+input[type="file"] {
+
+  font-size: 16px;
+  opacity: 0;
+}
+
+.swiper {
+  width: inherit;
+  height: inherit;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#swiper-slide-product img{
+  display: inline-block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* swiper-custom.css */
+.swiper-button-prev,
+.swiper-button-next {
+  color: #000 !important; /* change color of the icons */
+  font-size: 10px !important;
+  /* change size of the icons */
+}
+
+.swiper-button-prev::before,
+.swiper-button-next::before {
+  content: "" !important; /* remove the default arrow content */
+}
+
+.wrapperClass {
+  min-height: 20rem;
+  border: 2px solid black;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.products:hover + ul {
+  height: 100%;
+}
+
+.hero-image {
+  height: 80vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  
+}
+
+.hero-text {
+  position: absolute;
+  top: 35%;
+  left: 10%;
+}
+
+
+.cartHover{
+   background-color: red;
+   padding: 20rem;
+   box-shadow: 8px -4px 80px 19px rgba(84,84,84,0.58);
+  -webkit-box-shadow: 8px -4px 80px 19px rgba(84,84,84,0.58);
+  -moz-box-shadow: 8px -4px 80px 19px rgba(84,84,84,0.58);
+}
