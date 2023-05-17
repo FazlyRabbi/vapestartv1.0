@@ -3,141 +3,83 @@ import product1 from "/img/prod01-1-min-copyright-500x598.jpg";
 import Image from "next/image";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
+import { Select, Option } from "@material-tailwind/react";
+import Magnifier from "react-magnifier";
 
-export default function ProductPrimaryDetails() {
-  // states 
-  // show/hide color select option 
-  const [ colorToggle, setColorToggle ] = useState(true);
-   // show/hide size select option 
-  const [ sizeToggle, setSizeToggle ] = useState(true);
-  // increse or decrease quantity 
-  const [ quantity, setQuantity ] = useState(0)
+export default function ProductPrimaryDetails({ data }) {
+  // increse or decrease quantity
+  const [quantity, setQuantity] = useState(0);
 
+  const win = typeof window !== "undefined" ? true : false;
+
+  console.log(data);
 
   return (
-    <div className="lg:py-20 py-4">
-      <div className="container lg:flex md:flex justify-between items-start md:w-[95%] mx-auto lg:gap-0 md:gap-4">
-        <div className="text-center  lg:w-[40%] w-[90%] mx-auto flex flex-col mt-6">
+    <div className=" py-10">
+      <div className=" grid grid-cols-1 gap-6 md:grid-cols-2 justify-items-start  items-start">
+        <div className="text-center    flex flex-col ">
           {/* left sede main image for magnify  */}
-          <div className="border-4 border-[#EEEEEE]">
-            <Image
-              height={700}
-              className={`max-h-[40rem] scale-100 overflow-hidden transition ease-in duration-300 p-1 w-full md:w-[95%] mx-auto`}
-              alt="product__imgae"
-              src={product1}
-            />
+          <div className="border-2 shadow-md border-black    rounded-sm">
+            {win ? (
+              <Magnifier
+                src={data?.imgUrl}
+                imgAlt="product image"
+                zoomFactor={2}
+                glassDimension={150}
+                glassBorderColor=""
+                glassBorderWidth={2}
+                className="object-cover"
+              />
+            ) : (
+              ""
+            )}
           </div>
 
           {/* left side other image  */}
-
-          <div className="flex justify-between items-center w-full">
-            <Image
-              className="w-1/4 opacity-60 hover:opacity-100"
-              src={product1}
-            ></Image>
-            <Image
-              className="w-1/4 opacity-60 hover:opacity-100"
-              src={product1}
-            ></Image>
-            <Image
-              className="w-1/4 opacity-60 hover:opacity-100"
-              src={product1}
-            ></Image>
-            <Image
-              className="w-1/4 opacity-60 hover:opacity-100"
-              src={product1}
-            ></Image>
-          </div>
         </div>
 
-        <div className="container mx-auto lg:w-[55%] w-[80%]">
-          <h1 className="text-[#D22756] font-eco font-bold lg:text-[45px] text-[35px]">
-            <span className="lg:text-[55px]">$</span>70.00 –{" "}
-            <span className="lg:text-[55px]">$</span>85.00
-          </h1>
+        <div>
+          <p className="font-bold uppercase  text-[1.5rem] text-primary">
+            {data?.name}
+          </p>
 
-          <div className="lg:flex items-center gap-4 mt-3 mb-2">
-            <div className="gap-1 flex text-yellow-500 ">
-              <FaStar className="text-[30px]" />
-              <FaStar className="text-[30px]" />
-              <FaStar className="text-[30px]" />
-              <FaStar className="text-[30px]" />
-              <FaStar className="text-[30px]" />
-            </div>
-            <h1 className="text-[#D22756] text-[25px]">(1 customer review)</h1>
+          <div className="flex items-center text-sm  mt-5  space-x-3">
+            <p className="text-softGray line-through font-bold">
+              $<span className="text-[1.3rem]">{data?.price}</span>
+            </p>
+            <p className="text-primary font-bold">
+              $<span className="text-[1.5rem]">{data?.price}</span>
+            </p>
           </div>
 
-          <p className="my-8 text-[#71717a] w-[90%]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <p className="my-8 w-[90%]">
+            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
           </p>
 
           {/* color select dropdwon */}
-          <p className="text-[25px] font-eco font-bold">Color</p>
-          <div className="relative my-1">
-            <button
-              onClick={() => setColorToggle(!colorToggle)}
-              className="flex justify-between items-center bg-[#393939] text-white w-96 py-4 px-6 group"
-            >
-              <p>Choose an option</p>
-              <span className="pl-48">
-                <MdOutlineKeyboardArrowDown />
-              </span>
-            </button>
-
-            <div
-              className={`${
-                colorToggle ? "hidden" : "block"
-              } absolute top-full w-96 py-3 px-6  border border-t-white bg-[#393939] text-white duration-900 ease-in z-40`}
-            >
-              <ul className="text-left">
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Green
-                </li>
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Red
-                </li>
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Yellow
-                </li>
-              </ul>
-            </div>
-          </div>
 
           {/* side select dropdwon  */}
-          <p className="text-[25px] font-eco font-bold my-2">Size</p>
+          <p className="text-[25px] font-eco font-bold my-2">Flavour</p>
           <div className="relative">
-            <button
-              onClick={() => setSizeToggle(!sizeToggle)}
-              className="flex justify-between items-center bg-[#393939] text-white w-96 py-4 px-6 group"
-            >
-              <p>Choose an option</p>
-              <span className="pl-48">
-                <MdOutlineKeyboardArrowDown />
-              </span>
-            </button>
-
-            <div
-              className={`${
-                sizeToggle ? "hidden" : "block"
-              } absolute top-full w-96 py-3 px-6  border border-t-white bg-[#393939] text-white duration-900 ease-in z-40`}
-            >
-              <ul className="text-left">
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Small
-                </li>
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Medium
-                </li>
-                <li className="hover:bg-blue-gray-600 hover:text-yellow-500">
-                  Large
-                </li>
-              </ul>
+            <div>
+              <Select
+                label="Choose a Options"
+                color="black"
+                className=" font-bold"
+                // onChange={(e) =>
+                //   setProduct({
+                //     ...product,
+                //     category: e,
+                //   })
+                // }
+              >
+                <Option value="645e3db7645f84f3b45b68ab">data</Option>
+                {/* {data?.Flavour?.length() !== 0
+                  ? data?.Flavour?.map((data) => (
+                      <Option value="645e3db7645f84f3b45b68ab">{data}</Option>
+                    ))
+                  : ""} */}
+              </Select>
             </div>
           </div>
 
@@ -146,30 +88,28 @@ export default function ProductPrimaryDetails() {
             <div className="relative">
               <input
                 type="text"
-                className="bg-[#393939] text-white px-8 w-28 font-bold py-3 text-[20px]"
+                className="bg-[#393939] rounded-sm text-white px-4 w-20 font-bold py-2 text-[20px]"
                 placeholder={quantity}
               />
-              <div className="absolute top-0 -translate-y-3 right-0 py-3 ">
-                <div onClick={()=>setQuantity(quantity+1)} className="hover:bg-[#D22756]  py-1 px-2">
+              <div className="absolute top-0 -translate-y-3 right-0 py-2 ">
+                <div
+                  onClick={() => setQuantity(quantity + 1)}
+                  className=" cursor-pointer pt-2   px-2"
+                >
                   <MdKeyboardArrowUp className="text-white text-xl" />
                 </div>
-                <div onClick={()=>setQuantity(quantity-1)}  className=" hover:bg-[#D22756] py-1 px-2">
+                <div
+                  onClick={() => setQuantity(quantity - 1)}
+                  className="   cursor-pointer  px-2"
+                >
                   <MdOutlineKeyboardArrowDown className="text-white text-xl" />
                 </div>
               </div>
             </div>
-            
-            <button className="text-[20px] py-3 px-8 font-eco font-bold bg-[#D22756] text-white">
-              Buy Now
-            </button>
-          </div>
 
-          {/* product details  */}
-          <div className="text-[#71717a]">
-            <p>SKU: 42113124</p>
-            <p>Categories: E-Liquids, Premium Mods, RDAs (Drippers)</p>
-            <p>Tags: E-Liquids, Premium Mods</p>
-            <p>Product ID: 523</p>
+            <button className="text-[20px]  bg-primary rounded-sm py-2 px-4 font-eco font-bold  text-white">
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>

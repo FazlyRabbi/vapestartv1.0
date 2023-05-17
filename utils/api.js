@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: `https://vape-star.vercel.app/api`, // Set your API base URL here
+  baseURL: `http://localhost:3000/api`, // Set your API base URL here
 });
 
 export const Get = async (url, config = {}) => {
@@ -27,10 +27,13 @@ export const httpPost = async (url, data = {}, config = {}) => {
     const response = await apiClient.post(url, data, config);
     return response.data;
   } catch (error) {
-    throw new Error(error.message);
+    if (typeof error.response.data === typeof "sdf") {
+      throw new Error(error.response.data);
+    } else {
+      throw new Error(error.response.data.message);
+    }
   }
 };
-
 
 export const httpPut = async (url, data = {}, config = {}) => {
   try {
@@ -40,7 +43,6 @@ export const httpPut = async (url, data = {}, config = {}) => {
     throw new Error("Failed to perform PUT request");
   }
 };
-
 
 export const httpDelete = async (url, id) => {
   try {

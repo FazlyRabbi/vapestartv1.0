@@ -59,6 +59,7 @@ const productSchema = new mongoose.Schema(
       lowercase: true,
       index: true,
       required: true,
+      sparse: true
     },
 
     category: {

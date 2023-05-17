@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import http from "utils/api";
+
+const init = {
+  login_email: "",
+  loging_password: "",
+  name: "",
+  email: "",
+  password: "",
+  conf_password: "",
+  success: "",
+  error: "",
+};
 
 function signup() {
-  const handleSubmit = (e) => {
+  const [user, setUser] = useState(init);
+
+  const {
+    login_email,
+    loging_password,
+    name,
+    email,
+    password,
+    conf_password,
+    success,
+    error,
+  } = user;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const { data } = await http.httpPost(`/auth/signup`, {
+        name,
+        email,
+        password,
+      });
+
+      setUser({ ...user, success: data.message });
+    } catch (err) {
+      setUser({ ...user, message: err.message });
+    }
   };
 
   return (
@@ -17,6 +54,7 @@ function signup() {
         <input
           type="text"
           id="email"
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
           className=" py-1 px-4 border border-black"
         />
         <label htmlFor="email" className="block">
@@ -26,6 +64,7 @@ function signup() {
         <input
           type="email"
           id="email"
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
           className=" py-1 px-4 border border-black"
         />
 
@@ -36,12 +75,19 @@ function signup() {
         <input
           type="password"
           id="email"
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
           className=" py-1 px-4 border border-black"
         />
 
         <button className=" block mt-4   bg-black  rounded-sm px-4 py-1 text-white">
           Submit
         </button>
+
+        {user.message ? (
+          <span className=" text-red mt-4 block font-bold">{user.message}</span>
+        ) : (
+          ""
+        )}
       </form>
     </div>
   );

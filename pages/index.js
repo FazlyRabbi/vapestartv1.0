@@ -203,7 +203,7 @@ export default function Home() {
       
         md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mx-auto  justify-items-center  "
         >
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -240,7 +240,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -278,7 +278,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -315,7 +315,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -353,7 +353,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -390,7 +390,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -427,7 +427,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -464,7 +464,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -501,7 +501,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               
@@ -538,7 +538,7 @@ export default function Home() {
               />
             </div>
           </Link>
-          <Link href={`/singleproduct`}>
+          <Link href={`/products/jlksadjf`}>
             <div
               className={`relative 
               

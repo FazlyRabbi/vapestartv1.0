@@ -236,6 +236,7 @@ function index() {
 
     if (res.ok) {
       setIsFatching(false);
+      refetch();
       showAlert({
         icon: "success",
         title: "Product Added Successfully!",

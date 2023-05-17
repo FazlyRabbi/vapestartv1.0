@@ -1,7 +1,7 @@
 // import { Navbar } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillInstagram, AiOutlineMenu } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { BsArrowRightShort, BsTwitter } from "react-icons/bs";
@@ -10,9 +10,21 @@ import { MdClose } from "react-icons/md";
 import { TiSocialFacebookCircular } from "react-icons/ti";
 import logo from "../../img/logo.png";
 import Search from "../Search";
+import { useSession, signOut } from "next-auth/react";
 
 function Header() {
   const [open, setOpen] = useState(false);
+
+  const [user, setUser] = useState(null);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setUser(session.data);
+       console.log(session);
+    } else {
+    }
+  }, [session]);
 
   return (
     <header
@@ -86,7 +98,18 @@ function Header() {
                  font-bold"
                   >
                     <BiLogIn />
-                    <p className=" ">Log In/Signup</p>
+                    {user ? (
+                      <p
+                        onClick={(e) => {
+                          e.preventDefault();
+                          signOut();
+                        }}
+                      >
+                        Sign Out
+                      </p>
+                    ) : (
+                      <p>Log In/Signup</p>
+                    )}
                   </div>
                 </div>
               </Link>

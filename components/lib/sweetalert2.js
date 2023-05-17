@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2';
 
 const useSweetAlert = () => {
+  
   const showAlert = (options) => {
     return Swal.fire(options);
   };

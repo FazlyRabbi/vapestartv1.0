@@ -10,6 +10,7 @@ import { ProductsContext } from "@/context/productsContext";
 
 function ProductsCetegorys({ setSlug }) {
   const { productsQuery } = useContext(ProductsContext);
+
   const { data, isLoading, isError } = productsQuery;
 
   const [productsByCategroy, setProductsByCategroy] = useState([]);
@@ -23,7 +24,6 @@ function ProductsCetegorys({ setSlug }) {
       );
 
       if (route.query.category) {
-        console.log(route.query.category);
         setSlug(route.query.category);
         setProductsByCategroy(filteredProducts);
       }
@@ -64,7 +64,7 @@ function ProductsCetegorys({ setSlug }) {
 
         <div className=" grid grid-cols-1 mt-5 md:grid-cols-2 justify-items-center px-2 py-6 xl:grid-cols-4 gap-6 mx-auto">
           {productsByCategroy?.map((product) => (
-            <Link href={`/singleproduct`} key={product.id}>
+            <Link href={`/products/${product?.slug}`} key={product.id}>
               <div className="max-h-[19rem] max-w-[14rem] hover:scale-105 shadow-lg relative rounded-sm transition-all duration-200 overflow-hidden">
                 {/* Image and other details */}
                 <Image

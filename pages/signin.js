@@ -1,9 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import { signIn, useSession, signOut } from "next-auth/react";
+
+const init = {
+  login_email: "",
+  loging_password: "",
+  name: "",
+  email: "",
+  password: "",
+  conf_password: "",
+  success: "",
+  error: "",
+};
 
 function signin() {
-  const handleSubmit = (e) => {
+  const [user, setUser] = useState(init);
+
+  const session = useSession();
+  const {
+    login_email,
+    loging_password,
+    name,
+    email,
+    password,
+    conf_password,
+    success,
+    error,
+  } = user;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      let options = {
+        redirect: false,
+        email,
+        password,
+      };
+
+      const res = await signIn("credentials", options);
+      if (res.ok) {
+        console.log(res);
+        console.log(session);
+      } else {
+        console.log(res.error);
+      }
+
+      // setUser({ ...user, success: true });
+    } catch (err) {
+      console.log(err);
+    }
   };
+
   return (
     <div className=" p-5">
       <h1 className=" mb-2 font-bold">Signin</h1>
@@ -15,7 +62,7 @@ function signin() {
 
         <input
           type="email"
-          id="email"
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
           className=" py-1 px-4 border border-black"
         />
 
@@ -24,8 +71,8 @@ function signin() {
         </label>
 
         <input
-          type="email"
-          id="email"
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          type="password"
           className=" py-1 px-4 border border-black"
         />
 

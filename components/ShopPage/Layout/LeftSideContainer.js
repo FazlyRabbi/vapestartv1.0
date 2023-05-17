@@ -6,19 +6,22 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import http from "utils/api";
 import Image from "next/image";
 import { useQuery } from "react-query";
-
+import { BulletList } from "react-content-loader";
 
 import p1 from "../../../img/p1.jpg";
+import { useRouter } from "next/router";
 
 function LeftSideContainer() {
   const [open, setOpen] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState(true);
 
+  const router = useRouter();
+
   const { data, isLoading, isError } = useQuery("myData", fetchData);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <BulletList />;
+  // }
 
   if (isError) {
     return <div>Error fetching data</div>;
@@ -65,18 +68,21 @@ function LeftSideContainer() {
         `}
           >
             <ul className={`p-2 space-y-4  ml-2 uppercase`}>
-              {data &&
-                data?.map((category, index) => (
+              {isLoading ? (
+                <BulletList animate={true} />
+              ) : (
+                data.map((category, index) => (
                   <Link
                     className=" block"
                     key={index}
                     href={`/product-category/${category.slug}`}
                   >
-                    <li  className=" hover:text-primary text-white">
+                    <li className=" hover:text-primary text-white">
                       {category.name}
                     </li>
                   </Link>
-                ))}
+                ))
+              )}
             </ul>
           </div>
         </div>
@@ -211,121 +217,124 @@ function LeftSideContainer() {
           </div>
         </div>
         {/* cart */}
+        {router.pathname === "/cart" ? (
+          ""
+        ) : (
+          <div className="cart mt-5 bg-matBlack text-white p-4 rounded-sm">
+            <div className="cart__container">
+              <h1 className="cart__heading text-[1.5rem]">Cart</h1>
 
-        <div className="cart mt-5 bg-matBlack text-white p-4 rounded-sm">
-          <div className="cart__container">
-            <h1 className="cart__heading text-[1.5rem]">Cart</h1>
+              <div className="cart__products">
+                {/* proudcts */}
+                <div className=" cartProduct__wrapper p-4 flex justify-between ">
+                  <div className="flex space-x-5">
+                    <div>
+                      <Image
+                        className=" rounded-sm"
+                        src={p1}
+                        width={50}
+                        height={50}
+                        alt="product image"
+                      />
+                    </div>
 
-            <div className="cart__products">
-              {/* proudcts */}
-              <div className=" cartProduct__wrapper p-4 flex justify-between ">
-                <div className="flex space-x-5">
-                  <div>
-                    <Image
-                      className=" rounded-sm"
-                      src={p1}
-                      width={50}
-                      height={50}
-                      alt="product image"
-                    />
-                  </div>
+                    <div>
+                      <p>Product Title Is Here</p>
 
-                  <div>
-                    <p>Product Title Is Here</p>
-
-                    <div className="flex ext-sm   space-x-3">
-                      <p className="  text-softGray  font-bold">
-                        <span className="text-[1rem]">1*</span>
-                      </p>
-                      <p className="text-yeollow  font-bold">
-                        $<span className="text-[1rem]">26.99</span>
-                      </p>
+                      <div className="flex ext-sm   space-x-3">
+                        <p className="  text-softGray  font-bold">
+                          <span className="text-[1rem]">1*</span>
+                        </p>
+                        <p className="text-yeollow  font-bold">
+                          $<span className="text-[1rem]">26.99</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <AiOutlineCloseCircle className=" cursor-pointer  " />
                 </div>
-                <AiOutlineCloseCircle className=" cursor-pointer  " />
-              </div>
-              <div className=" cartProduct__wrapper p-4 flex justify-between ">
-                <div className="flex space-x-5">
-                  <div>
-                    <Image
-                      className=" rounded-sm"
-                      src={p1}
-                      width={50}
-                      height={50}
-                      alt="product image"
-                    />
-                  </div>
+                <div className=" cartProduct__wrapper p-4 flex justify-between ">
+                  <div className="flex space-x-5">
+                    <div>
+                      <Image
+                        className=" rounded-sm"
+                        src={p1}
+                        width={50}
+                        height={50}
+                        alt="product image"
+                      />
+                    </div>
 
-                  <div>
-                    <p>Product Title Is Here</p>
+                    <div>
+                      <p>Product Title Is Here</p>
 
-                    <div className="flex ext-sm   space-x-3">
-                      <p className="  text-softGray  font-bold">
-                        <span className="text-[1rem]">1*</span>
-                      </p>
-                      <p className="text-yeollow  font-bold">
-                        $<span className="text-[1rem]">26.99</span>
-                      </p>
+                      <div className="flex ext-sm   space-x-3">
+                        <p className="  text-softGray  font-bold">
+                          <span className="text-[1rem]">1*</span>
+                        </p>
+                        <p className="text-yeollow  font-bold">
+                          $<span className="text-[1rem]">26.99</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <AiOutlineCloseCircle className=" cursor-pointer  " />
                 </div>
-                <AiOutlineCloseCircle className=" cursor-pointer  " />
-              </div>
-              <div className=" cartProduct__wrapper p-4 flex justify-between ">
-                <div className="flex space-x-5">
-                  <div>
-                    <Image
-                      className=" rounded-sm"
-                      src={p1}
-                      width={50}
-                      height={50}
-                      alt="product image"
-                    />
-                  </div>
+                <div className=" cartProduct__wrapper p-4 flex justify-between ">
+                  <div className="flex space-x-5">
+                    <div>
+                      <Image
+                        className=" rounded-sm"
+                        src={p1}
+                        width={50}
+                        height={50}
+                        alt="product image"
+                      />
+                    </div>
 
-                  <div>
-                    <p>Product Title Is Here</p>
+                    <div>
+                      <p>Product Title Is Here</p>
 
-                    <div className="flex ext-sm   space-x-3">
-                      <p className="  text-softGray  font-bold">
-                        <span className="text-[1rem]">1*</span>
-                      </p>
-                      <p className="text-yeollow  font-bold">
-                        $<span className="text-[1rem]">26.99</span>
-                      </p>
+                      <div className="flex ext-sm   space-x-3">
+                        <p className="  text-softGray  font-bold">
+                          <span className="text-[1rem]">1*</span>
+                        </p>
+                        <p className="text-yeollow  font-bold">
+                          $<span className="text-[1rem]">26.99</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <AiOutlineCloseCircle className=" cursor-pointer  " />
                 </div>
-                <AiOutlineCloseCircle className=" cursor-pointer  " />
               </div>
-            </div>
 
-            <hr className=" w-full h-1 mx-auto  bg-blue-gray-200 border-0 rounded my-2 "></hr>
+              <hr className=" w-full h-1 mx-auto  bg-blue-gray-200 border-0 rounded my-2 "></hr>
 
-            <div className="calculations  ">
-              <p className="mb-1">
-                <span>
-                  Subtotal: <span className="font-bold">$26.99</span>
-                </span>
-              </p>
-              <div className="buttons flex  space-x-5">
-                <Link
-                  href={`#`}
-                  className="text-white font-bold py-1 px-4  rounded-md   bg-primary  block"
-                >
-                  View Cart
-                </Link>
-                <Link
-                  href={`#`}
-                  className=" p-1  px-4 rounded-md   bg-primary text-white font-bold   block"
-                >
-                  Checkout
-                </Link>
+              <div className="calculations  ">
+                <p className="mb-1">
+                  <span>
+                    Subtotal: <span className="font-bold">$26.99</span>
+                  </span>
+                </p>
+                <div className="buttons flex  space-x-5">
+                  <Link
+                    href={`/cart`}
+                    className="text-white font-bold py-1 px-4  rounded-md   bg-primary  block"
+                  >
+                    View Cart
+                  </Link>
+                  <Link
+                    href={`#`}
+                    className=" p-1  px-4 rounded-md   bg-primary text-white font-bold   block"
+                  >
+                    Checkout
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
     </>
   );

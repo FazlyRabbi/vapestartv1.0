@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter your name."],
       trim: true,
+      unique: [true, "Name is already in used!"],
     },
     email: {
       type: String,
@@ -43,7 +44,7 @@ const userSchema = new mongoose.Schema(
         city: {
           type: "String",
         },
-        countyr: {
+        country: {
           type: "String",
         },
       },

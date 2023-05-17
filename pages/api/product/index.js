@@ -34,7 +34,7 @@ router
     await db.conectDb();
 
     try {
-      const products = await Product.find({}).populate("category");
+      const products = await Product.find().populate("category");
 
       // upload product
       res.status(200).json({

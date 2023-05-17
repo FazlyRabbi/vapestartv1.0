@@ -31,19 +31,19 @@ export default function MyApp({
           crossOrigin="anonymous"
         />
       </Head>
-      <ThemeProvider>
-        <SessionProvider session={session}>
-          <AgeGateProvider>
-            <QueryClientProvider client={queryClient}>
-              <Hydrate state={pageProps.dehydratedState}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ThemeProvider>
+            <SessionProvider session={session}>
+              <AgeGateProvider>
                 <ProductsProvider>
                   <Component {...pageProps} />
                 </ProductsProvider>
-              </Hydrate>
-            </QueryClientProvider>
-          </AgeGateProvider>
-        </SessionProvider>
-      </ThemeProvider>
+              </AgeGateProvider>
+            </SessionProvider>
+          </ThemeProvider>
+        </Hydrate>
+      </QueryClientProvider>
     </>
   );
 }

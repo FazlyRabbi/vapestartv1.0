@@ -3,13 +3,12 @@ import Link from "next/link";
 import { Chip } from "@material-tailwind/react";
 import { ProductsContext } from "@/context/productsContext";
 import { useState, useContext, useEffect } from "react";
-
+import { Instagram } from "react-content-loader";
 // imports components
 import DisposableVape from "../DisposableVape";
 import NewCollections from "../NewCollections";
 import VapeMod from "../VapeMod";
 function Products() {
-  
   const { productsQuery } = useContext(ProductsContext);
   const { data, isLoading, isError } = productsQuery;
 
@@ -20,13 +19,14 @@ function Products() {
       const filteredProducts = data.filter(
         (product) => product.category.slug === "deal-of-the-day"
       );
+
       setDealOfTheDay(filteredProducts);
     }
   }, [data]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading) {
+  //   return <Instagram />
+  // }
 
   if (isError) {
     return <div>Error fetching data</div>;
@@ -40,36 +40,40 @@ function Products() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center px-2 py-6 xl:grid-cols-4 gap-6 mx-auto">
         {/* Render the deal of the day products */}
-        {dealOfTheDay?.map((product) => (
-          <Link href={`/singleproduct`} key={product.id}>
-            <div className="max-h-[19rem] max-w-[14rem] hover:scale-105 shadow-lg relative rounded-sm transition-all duration-200 overflow-hidden">
-              {/* Image and other details */}
-              <Image
-                height={300}
-                width={300}
-                className={`max-h-[13rem]`}
-                alt="product__imgae"
-                src={product?.imgUrl}
-              />
-              <div className="z-10 font-eco py-4 hover:text-primary bg-[#111111] text-white">
-                <p className="text-center font-bold">{product.name}</p>
-                <div className="flex items-center text-sm py-2 justify-center space-x-3">
-                  <p className="text-softGray line-through font-bold">
-                    $<span className="text-[1.3rem]">{product.price}</span>
-                  </p>
-                  <p className="text-yeollow font-bold">
-                    $<span className="text-[1.3rem]">{product.price}</span>
-                  </p>
+        {isLoading ? (
+          <Instagram width={230} height={230} />
+        ) : (
+          dealOfTheDay?.map((product) => (
+            <Link href={`/products/${product?.slug}`} key={product.id}>
+              <div className="max-h-[19rem] max-w-[14rem] hover:scale-105 shadow-lg relative rounded-sm transition-all duration-200 overflow-hidden">
+                {/* Image and other details */}
+                <Image
+                  height={300}
+                  width={300}
+                  className={`max-h-[13rem]`}
+                  alt="product__imgae"
+                  src={product?.imgUrl}
+                />
+                <div className="z-10 font-eco py-4 hover:text-primary bg-[#111111] text-white">
+                  <p className="text-center font-bold">{product.name}</p>
+                  <div className="flex items-center text-sm py-2 justify-center space-x-3">
+                    <p className="text-softGray line-through font-bold">
+                      $<span className="text-[1.3rem]">{product.price}</span>
+                    </p>
+                    <p className="text-yeollow font-bold">
+                      $<span className="text-[1.3rem]">{product.price}</span>
+                    </p>
+                  </div>
                 </div>
+                {/* Sale badge */}
+                <Chip
+                  className="absolute px-[4px] rounded-sm hover:shadow-2xl transition-all duration-200 top-1 left-1 bg-yeollow py-[2px] font-eco text-black capitalize"
+                  value="sale!"
+                />
               </div>
-              {/* Sale badge */}
-              <Chip
-                className="absolute px-[4px] rounded-sm hover:shadow-2xl transition-all duration-200 top-1 left-1 bg-yeollow py-[2px] font-eco text-black capitalize"
-                value="sale!"
-              />
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        )}
       </div>
 
       {/* Inner Components */}

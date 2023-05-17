@@ -11,9 +11,12 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+
 export default function SingleProduct({ details }) {
   return (
-    <section className="product  cursor-pointer  ">
+  
+  <section className="product  cursor-pointer  ">
+     
       <Card className="max-w-[25rem] overflow-hidden rounded-md">
         <CardHeader
           floated={false}
@@ -33,6 +36,8 @@ export default function SingleProduct({ details }) {
             />
           )}
         </CardHeader>
+
+
         <CardBody>
           <Typography variant="h1" color="blue-gray">
             {details?.attributes.Title}
