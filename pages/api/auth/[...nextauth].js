@@ -81,6 +81,8 @@ export default NextAuth({
     async session({ session, token }) {
       let user = await User.findById(token.sub);
       session.user.role = user.role || "user";
+      session.user._id = user._id;
+      token.role = user.role || "user";
       return session;
     },
   },

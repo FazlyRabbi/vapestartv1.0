@@ -21,8 +21,8 @@ function Header() {
   useEffect(() => {
     if (session.status === "authenticated") {
       setUser(session.data);
-       console.log(session);
     } else {
+      setUser(null);
     }
   }, [session]);
 

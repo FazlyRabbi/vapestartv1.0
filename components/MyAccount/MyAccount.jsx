@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { signIn, useSession, signOut } from "next-auth/react";
+
 import http from "utils/api";
 
 const init = {
@@ -18,10 +20,9 @@ const init = {
 };
 
 function MyAccount() {
+  const route = useRouter();
 
   const [user, setUser] = useState(init);
-
-
 
   const {
     login_email,
@@ -49,7 +50,9 @@ function MyAccount() {
       };
 
       setUser({ ...user, LogInLoading: true });
+
       const res = await signIn("credentials", options);
+
       if (res.ok) {
         setUser({
           ...user,
@@ -59,6 +62,8 @@ function MyAccount() {
           login_email: "",
           loging_password: "",
         });
+
+        route.push("/shop");
       } else {
         setUser({
           ...user,
@@ -338,3 +343,15 @@ function MyAccount() {
 }
 
 export default MyAccount;
+
+export async function getServerSideProps(context) {
+  const { req, query } = context;
+
+  callbackUrl = query;
+
+  console.log(callbackUrl);
+
+  return {
+    props: { providers },
+  };
+}

@@ -2,17 +2,38 @@ import { FaStar } from "react-icons/fa";
 import product1 from "/img/prod01-1-min-copyright-500x598.jpg";
 import Image from "next/image";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import Magnifier from "react-magnifier";
+import Link from "next/link";
+import http from "utils/api";
+import { useSession } from "next-auth/react";
+
+const init = {
+  user: "",
+  product: "",
+  qunatity: 1,
+  flavour: "",
+};
 
 export default function ProductPrimaryDetails({ data }) {
-  // increse or decrease quantity
-  const [quantity, setQuantity] = useState(0);
+  const session = useSession();
 
-  const win = typeof window !== "undefined" ? true : false;
+  const [cart, setCart] = useState(init);
 
-  console.log(data);
+  const { user, product, qunatity, flavour } = cart;
+
+  if (!data) return;
+
+  // handle add to cart
+
+  useEffect(() => {
+    setCart({ ...cart, product: _id, user: session.data.user._id });
+  }, []);
+
+  const handleAddToCart = () => {
+    console.log(cart);
+  };
 
   return (
     <div className=" py-10">
@@ -20,19 +41,15 @@ export default function ProductPrimaryDetails({ data }) {
         <div className="text-center    flex flex-col ">
           {/* left sede main image for magnify  */}
           <div className="border-2 shadow-md border-black    rounded-sm">
-            {win ? (
-              <Magnifier
-                src={data?.imgUrl}
-                imgAlt="product image"
-                zoomFactor={2}
-                glassDimension={150}
-                glassBorderColor=""
-                glassBorderWidth={2}
-                className="object-cover"
-              />
-            ) : (
-              ""
-            )}
+            <Magnifier
+              src={data?.imgUrl}
+              imgAlt="product image"
+              zoomFactor={2}
+              glassDimension={150}
+              glassBorderColor=""
+              glassBorderWidth={2}
+              className="object-cover"
+            />
           </div>
 
           {/* left side other image  */}
@@ -66,50 +83,43 @@ export default function ProductPrimaryDetails({ data }) {
                 label="Choose a Options"
                 color="black"
                 className=" font-bold"
-                // onChange={(e) =>
-                //   setProduct({
-                //     ...product,
-                //     category: e,
-                //   })
-                // }
+                onChange={(e) =>
+                  setCart({
+                    ...product,
+                    flavour: e,
+                  })
+                }
               >
-                <Option value="645e3db7645f84f3b45b68ab">data</Option>
-                {/* {data?.Flavour?.length() !== 0
+                {data?.Flavour?.length !== 0
                   ? data?.Flavour?.map((data) => (
-                      <Option value="645e3db7645f84f3b45b68ab">{data}</Option>
+                      <Option value={data}>{data}</Option>
                     ))
-                  : ""} */}
+                  : ""}
               </Select>
             </div>
           </div>
 
           {/* quantity input  */}
           <div className="flex items-center gap-3 my-10">
-            <div className="relative">
+            <div className=" flex justify-center items-center space-x-2">
+              <p className="font-bold">QTY :</p>
               <input
-                type="text"
+                type="number"
+                value={qunatity}
+                onChange={(e) => setCart({ ...cart, qunatity: e.target.value })}
                 className="bg-[#393939] rounded-sm text-white px-4 w-20 font-bold py-2 text-[20px]"
-                placeholder={quantity}
+                placeholder={qunatity}
               />
-              <div className="absolute top-0 -translate-y-3 right-0 py-2 ">
-                <div
-                  onClick={() => setQuantity(quantity + 1)}
-                  className=" cursor-pointer pt-2   px-2"
-                >
-                  <MdKeyboardArrowUp className="text-white text-xl" />
-                </div>
-                <div
-                  onClick={() => setQuantity(quantity - 1)}
-                  className="   cursor-pointer  px-2"
-                >
-                  <MdOutlineKeyboardArrowDown className="text-white text-xl" />
-                </div>
-              </div>
             </div>
 
-            <button className="text-[20px]  bg-primary rounded-sm py-2 px-4 font-eco font-bold  text-white">
-              Add To Cart
-            </button>
+            <Link href={`/cart`}>
+              <button
+                onClick={() => handleAddToCart()}
+                className="text-[20px]  bg-primary rounded-sm py-2 px-4 font-eco font-bold  text-white"
+              >
+                Add To Cart
+              </button>
+            </Link>
           </div>
         </div>
       </div>

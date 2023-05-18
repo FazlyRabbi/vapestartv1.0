@@ -6,7 +6,7 @@ import fs from "fs";
 import { imgMiddleware } from "middleware/imgMiddleware";
 import Product from "models/Product";
 import db from "utils/db";
-
+import auth from "middleware/auth";
 // Configuration
 cloudinary.config({
   cloud_name: "deor7xxf1",
@@ -30,6 +30,7 @@ router
     })
   )
   .use(imgMiddleware)
+  
   .get(async (req, res) => {
     await db.conectDb();
 

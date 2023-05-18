@@ -8,7 +8,6 @@ import { sendMailToken } from "utils/sendEmailToken";
 const router = createRouter();
 
 router.post(async (req, res) => {
-
   await db.conectDb();
 
   try {
@@ -17,7 +16,6 @@ router.post(async (req, res) => {
     if (!name || !email || !password) {
       return res.status(400).send("please fill all fills!");
     }
-
 
     const user = await User.findOne({ email: req.body.email });
 
@@ -35,13 +33,11 @@ router.post(async (req, res) => {
       id: addedUser._id.toString(),
     });
 
-    
     const url = `${process.env.BASE_URL}/activate/${activation_token}`;
-    
-    console.log(url);
-    sendMailToken(email, "activation token", url);
 
-    await db.disconnectDb();
+    // sendMailToken(email, "activation token", url);
+
+    // await db.disconnectDb();
 
     res.status(200).json({
       ok: true,

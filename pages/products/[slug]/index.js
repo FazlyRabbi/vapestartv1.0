@@ -12,7 +12,7 @@ export default function SingleProduct({ params }) {
   const { productsQuery } = useContext(ProductsContext);
   const { data, isLoading, isError } = productsQuery;
 
-  const [singleProduct, setSingleProduct] = useState([]);
+  const [singleProduct, setSingleProduct] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -27,8 +27,8 @@ export default function SingleProduct({ params }) {
     <section>
       <Header />
       <ShopLayout>
-        <ProductPrimaryDetails data={singleProduct} />
-        <ProductDescription data={singleProduct} />
+        {singleProduct && <ProductPrimaryDetails data={singleProduct} />}
+        {singleProduct && <ProductDescription data={singleProduct} />}
         <RelatedProducts className="md:mt-4" />
       </ShopLayout>
       <Footer />
