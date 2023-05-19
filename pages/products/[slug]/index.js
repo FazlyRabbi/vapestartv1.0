@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { ProductsContext } from "@/context/productsContext";
 import { useState, useContext, useEffect } from "react";
 
+import http from "utils/api";
+
 export default function SingleProduct({ params }) {
   const { productsQuery } = useContext(ProductsContext);
   const { data, isLoading, isError } = productsQuery;
@@ -44,7 +46,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`http://localhost:3000/api/product`);
+  const res = await fetch(`https://vape-star.vercel.app/api/product`);
 
   const products = await res.json();
 
