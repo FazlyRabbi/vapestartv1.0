@@ -45,10 +45,10 @@ export default NextAuth({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
-      // credentials: {
-      //   username: { label: "Username", type: "text", placeholder: "jsmith" },
-      //   password: { label: "Password", type: "password" },
-      // },
+      credentials: {
+        email: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
 
       async authorize(credentials, req) {
         const email = credentials.email;
@@ -93,6 +93,7 @@ export default NextAuth({
 
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.JWT_SECRET,
 });

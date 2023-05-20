@@ -340,7 +340,7 @@ function index() {
                         })
                       }
                     >
-                      <Option value="645e3db7645f84f3b45b68ab">
+                      <Option value="64672655fb862e64ac0b760f">
                         deal of the day
                       </Option>
                       <Option value="645e3dd9645f84f3b45b68ad">

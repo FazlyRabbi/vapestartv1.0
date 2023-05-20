@@ -12,6 +12,7 @@ import p1 from "../../../img/p1.jpg";
 import { useRouter } from "next/router";
 
 function LeftSideContainer() {
+  
   const [open, setOpen] = useState(true);
   const [relatedProducts, setRelatedProducts] = useState(true);
 

@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { SessionProvider } from "next-auth/react";
 import { ProductsProvider } from "@/context/productsContext";
+import { CartProvider } from "@/context/cartContext";
 
 const queryClient = new QueryClient();
 
@@ -31,19 +32,21 @@ export default function MyApp({
           crossOrigin="anonymous"
         />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider>
-            <SessionProvider session={session}>
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <ThemeProvider>
               <AgeGateProvider>
                 <ProductsProvider>
-                  <Component {...pageProps} />
+                  <CartProvider>
+                    <Component {...pageProps} />
+                  </CartProvider>
                 </ProductsProvider>
               </AgeGateProvider>
-            </SessionProvider>
-          </ThemeProvider>
-        </Hydrate>
-      </QueryClientProvider>
+            </ThemeProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
     </>
   );
 }

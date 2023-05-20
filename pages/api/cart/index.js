@@ -2,39 +2,40 @@ import { createRouter } from "next-connect";
 import db from "utils/db";
 import Cart from "models/Cart";
 import Product from "models/Product";
+import bodyParser from "body-parser";
 
 const router = createRouter();
 
 router
   .post(async (req, res) => {
     await db.conectDb();
-    const { userId, productId, quantity } = req.body;
-
+    const { user, product, quantity, flavour } = req.body;
     try {
       //  Find the user's cart
-      let cart = await Cart.findOne({ user: userId });
+      let cart = await Cart.findOne({ user });
 
       if (!cart) {
         // If the user's cart doesn't exist, create a new one
         cart = await Cart({
-          user: userId,
+          user,
           items: [],
         });
       }
 
       // Check if the product is already in the cart
       const existingItem = cart.items.find(
-        (item) => item.product.toString() === productId
+        (item) => item.product.toString() === product
       );
 
       if (existingItem) {
         // If the product exists in the cart, update its quantity
-        existingItem.quantity += quantity;
+        existingItem.quantity += Number(quantity);
       } else {
         // If the product doesn't exist in the cart, add it as a new item
         cart.items.push({
-          product: productId,
-          quantity: quantity,
+          product,
+          quantity,
+          flavour,
         });
       }
 
@@ -56,17 +57,16 @@ router
   })
   .get(async (req, res) => {
     await db.conectDb();
+
     try {
-      const { userId } = req.body;
+      const { user } = req.query;
       // Find the user's cart
-      const cart = await Cart.findOne({ user: userId }).populate(
-        "items.product"
-      );
+      const cart = await Cart.findOne({ user }).populate("items.product");
 
       if (cart) {
         res.status(200).send({
           status: "success",
-          message: "Product inserted successfully!",
+          message: "Cart found successfully!",
           data: cart,
         });
       } else {

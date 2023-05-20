@@ -38,7 +38,6 @@ router
 
       const products = await Product.find({}).populate("category");
 
-
       // upload product
       res.status(200).json({
         status: "success",
@@ -58,7 +57,7 @@ router
       let files = Object.values(req.files).flat();
 
       const data = JSON.parse(req.body.data);
-      console.log(data.category);
+
 
       for (const file of files) {
         const result = await uploadToCloudinary(file.tempFilePath);

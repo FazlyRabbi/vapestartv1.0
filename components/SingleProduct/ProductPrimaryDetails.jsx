@@ -6,33 +6,41 @@ import { useEffect, useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import Magnifier from "react-magnifier";
 import Link from "next/link";
-import http from "utils/api";
+
 import { useSession } from "next-auth/react";
 
 const init = {
   user: "",
-  product: "",
-  qunatity: 1,
+  product: null,
+  quantity: 1,
   flavour: "",
 };
 
 export default function ProductPrimaryDetails({ data }) {
-  const session = useSession();
-
   const [cart, setCart] = useState(init);
 
-  const { user, product, qunatity, flavour } = cart;
+  const { user, product, quantity, flavour } = cart;
 
   if (!data) return;
 
   // handle add to cart
 
   useEffect(() => {
-    setCart({ ...cart, product: _id, user: session.data.user._id });
-  }, []);
+    if (data) {
+      setCart({ ...cart, product: data._id, user: "64620016c9e619ab7aa4f4a8" });
+    }
+  }, [data]);
 
-  const handleAddToCart = () => {
-    console.log(cart);
+  const handleAddToCart = async () => {
+    const response = await fetch(`https://vape-star.vercel.app/api/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart),
+    });
+
+    const data = await response.json();
   };
 
   return (
@@ -70,7 +78,11 @@ export default function ProductPrimaryDetails({ data }) {
           </div>
 
           <p className="my-8 w-[90%]">
-            <div dangerouslySetInnerHTML={{ __html: data?.description }} />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: data?.description.slice(0, 800),
+              }}
+            />
           </p>
 
           {/* color select dropdwon */}
@@ -85,7 +97,7 @@ export default function ProductPrimaryDetails({ data }) {
                 className=" font-bold"
                 onChange={(e) =>
                   setCart({
-                    ...product,
+                    ...cart,
                     flavour: e,
                   })
                 }
@@ -105,10 +117,10 @@ export default function ProductPrimaryDetails({ data }) {
               <p className="font-bold">QTY :</p>
               <input
                 type="number"
-                value={qunatity}
-                onChange={(e) => setCart({ ...cart, qunatity: e.target.value })}
+                value={quantity}
+                onChange={(e) => setCart({ ...cart, quantity: e.target.value })}
                 className="bg-[#393939] rounded-sm text-white px-4 w-20 font-bold py-2 text-[20px]"
-                placeholder={qunatity}
+                placeholder={quantity}
               />
             </div>
 

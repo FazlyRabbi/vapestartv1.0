@@ -20,6 +20,7 @@ const init = {
 };
 
 function MyAccount() {
+
   const route = useRouter();
 
   const [user, setUser] = useState(init);
@@ -64,6 +65,7 @@ function MyAccount() {
         });
 
         route.push("/shop");
+        
       } else {
         setUser({
           ...user,

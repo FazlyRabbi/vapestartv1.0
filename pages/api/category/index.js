@@ -9,10 +9,13 @@ router
     await db.conectDb();
 
     try {
-      const categorys = await Category.find({});
+      const categorys = await Category.find();
+
+      console.log(categorys);
+
       res.status(200).json({
         status: "success",
-        message: "cart created successfully!",
+        message: "Cetegory Find Successfully!",
         data: categorys,
       });
     } catch (err) {

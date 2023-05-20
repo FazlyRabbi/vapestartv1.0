@@ -17,13 +17,15 @@ export const ProductsProvider = ({ children }) => {
   const productsQuery = useProductsQuery();
 
   return (
-    <ProductsContext.Provider value={{productsQuery}}>
+    <ProductsContext.Provider value={{ productsQuery }}>
       {children}
     </ProductsContext.Provider>
   );
 };
 
 async function fetchProducts() {
+
   const response = await http.Get(`/product`);
+
   return response.data;
 }

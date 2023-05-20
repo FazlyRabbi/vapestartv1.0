@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ShopLayout from "@/components/ShopPage/Layout/Layout";
-import { Card, Typography, Input } from "@material-tailwind/react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import Header from "@/components/HomePage/Header";
 import Image from "next/image";
 import img from "../img/products/p4.jpg";
+import { CartContext } from "@/context/cartContext";
 
 function cart() {
+  const { cart } = useContext(CartContext);
+
   return (
     <div>
       <Header />
@@ -15,38 +17,45 @@ function cart() {
           {/* for big device  */}
           <div className=" hidden md:block">
             <div className="  flex  justify-between flex-wrap  ">
-              <p className=" font-bold text-white    min-w-[10rem]">Product</p>
+              <p className=" font-bold text-white   min-w-[10rem]">Product</p>
               <p className=" font-bold text-white">Price</p>
               <p className=" font-bold text-white">Quantity</p>
               <p className=" font-bold text-white">Subtotal</p>
             </div>
 
             <div className="t-body">
-              <div className=" flex border-b border-gray-100 justify-between items-center">
-                <div className=" flex  min-w-[8rem]  space-x-1    text-center items-center text-white  py-4">
-                  <AiOutlineCloseCircle className="   cursor-pointer text-red" />
-                  <div>
-                    <Image
-                      src={img}
-                      className="  rounded-sm"
-                      height={55}
-                      width={55}
-                      alt="product"
-                    />
-                  </div>
-                  <p>product tiitle</p>
-                </div>
+              {cart &&
+                cart?.items?.map((item) => (
+                  <div className=" flex border-b border-gray-100 justify-between items-center">
+                    <div className=" flex  min-w-[8rem]  space-x-1    text-center items-center text-white  py-4">
+                      <AiOutlineCloseCircle className="   cursor-pointer text-red" />
+                      <div>
+                        <Image
+                          src={item?.product.imgUrl}
+                          className="  rounded-sm"
+                          height={55}
+                          width={55}
+                          alt="product"
+                        />
+                      </div>
+                      <p>{item?.product.name}</p>
+                    </div>
 
-                <div className="py-4   items-start">
-                  <p className=" text-white">100</p>
-                </div>
-                <div className="py-4">
-                  <input type="number" placeholder="0" className="w-[2rem]" />
-                </div>
-                <div className="py-4">
-                  <p className=" text-white">100</p>
-                </div>
-              </div>
+                    <div className="py-4   items-start">
+                      <p className=" text-white">{item?.product.price}</p>
+                    </div>
+                    <div className="py-4">
+                      <input
+                        type="number"
+                        placeholder="0"
+                        className="w-[2rem]"
+                      />
+                    </div>
+                    <div className="py-4">
+                      <p className=" text-white">{item?.product.price}</p>
+                    </div>
+                  </div>
+                ))}
             </div>
             <div className=" button flex justify-center items-end mt-6">
               <button className=" px-6 py-1 font-bold bg-primary uppercase text-white   rounded-sm">
@@ -70,11 +79,7 @@ function cart() {
                 </div>
                 <div className="  border-b mb-1 border-gray-200 flex justify-between">
                   <p className=" font-bold text-white">Quantity:</p>
-                  <input
-                    type="number"
-                    placeholder="0"
-                    className="w-[2rem] "
-                  />
+                  <input type="number" placeholder="0" className="w-[2rem] " />
                 </div>
                 <div className="  border-b mb-1 border-gray-200 flex justify-between">
                   <p className=" font-bold text-white">SubTotal:</p>
