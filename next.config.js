@@ -5,8 +5,8 @@ module.exports = {
   // env: {
   //   MONGODB_URL:
   //     "mongodb+srv://root:7T6j8JZUXtTREp90@vapestar.aojk0ym.mongodb.net/vapestar?retryWrites=true&w=majority",
-  //   NEXTAUTH_URL: "https://vape-star.vercel.app",
-  //   API_URL: "https://vape-star.vercel.app/api",
+  //   NEXTAUTH_URL: "http://localhost:3000",
+  //   API_URL: "http://localhost:3000/api",
   //   JWT_SECRET: "DSFSADFSAJFIJ/*/*456798safsadfsf",
   //   GOOGLE_ID:
   //     "979435013015-rljj1i80l29svdrert7aae8g7sf1dfl1.apps.googleusercontent.com",
@@ -18,7 +18,7 @@ module.exports = {
   //   CLOUDINARY_NAME: "deor7xxf1",
   //   ACTIVATION_TOKEN_SECRET:
   //     "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GSDAFSADFASFR8y6aUy7",
-  //   BASE_URL: "https://vape-star.vercel.app",
+  //   BASE_URL: "http://localhost:3000",
   // },
   images: {
     unoptimized: true,

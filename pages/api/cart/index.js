@@ -56,9 +56,11 @@ router
     }
   })
   .get(async (req, res) => {
+
     await db.conectDb();
 
     try {
+      
       const { user } = req.query;
       // Find the user's cart
       const cart = await Cart.findOne({ user }).populate("items.product");

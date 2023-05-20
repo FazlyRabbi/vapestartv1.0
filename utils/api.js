@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://vape-star.vercel.app/api", // Set your API base URL here
+  baseURL: "http://localhost:3000/api", // Set your API base URL here
 });
 
 export const Get = async (url, config = {}) => {

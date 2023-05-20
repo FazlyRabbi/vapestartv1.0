@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
   const fetchCarts = async () => {
     try {
       const response = await fetch(
-        `https://vape-star.vercel.app/api/cart?user=${session.data.user._id}`,
+        `http://localhost:3000/api/cart?user=${session.data.user._id}`,
         {
           method: "GET",
           headers: {

@@ -32,7 +32,7 @@ export default function ProductPrimaryDetails({ data }) {
   }, [data]);
 
   const handleAddToCart = async () => {
-    const response = await fetch(`https://vape-star.vercel.app/api/cart`, {
+    const response = await fetch(`http://localhost:3000/api/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
