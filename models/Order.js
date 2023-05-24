@@ -16,6 +16,74 @@ const orderSchema = new mongoose.Schema({
     enum: ["pending", "processing", "shipped", "delivered"],
     default: "pending",
   },
+  billingDetails: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    streetAddress: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+  },
+  shippingDetails: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    streetAddress: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+  },
   items: [
     {
       productId: {

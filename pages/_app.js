@@ -10,6 +10,7 @@ import { Hydrate } from "react-query/hydration";
 import { SessionProvider } from "next-auth/react";
 import { ProductsProvider } from "@/context/productsContext";
 import { CartProvider } from "@/context/cartContext";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,15 @@ export default function MyApp({
               <AgeGateProvider>
                 <ProductsProvider>
                   <CartProvider>
+                    <FloatingWhatsApp
+                      phoneNumber="+9710555207215
+                      "
+                      accountName="Name is here"
+                      allowEsc
+                      allowClickAway
+                      notification
+                      notificationSound
+                    />
                     <Component {...pageProps} />
                   </CartProvider>
                 </ProductsProvider>

@@ -35,7 +35,7 @@ export const httpPost = async (url, data, config = {}) => {
   }
 };
 
-export const httpPut = async (url, data = {}, config = {}) => {
+export const httpPut = async (url, data , config = {}) => {
   try {
     const response = await apiClient.put(url, data, config);
     return response.data;
@@ -59,6 +59,7 @@ const http = {
   httpPost,
   Get,
   GetById,
+  httpPut,
   httpDelete,
 };
 

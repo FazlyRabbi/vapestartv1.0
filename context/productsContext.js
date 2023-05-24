@@ -14,6 +14,7 @@ export const useProductsQuery = () => {
 
 // ProductsProvider component
 export const ProductsProvider = ({ children }) => {
+  
   const productsQuery = useProductsQuery();
 
   return (

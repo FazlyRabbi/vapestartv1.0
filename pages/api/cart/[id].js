@@ -1,18 +1,15 @@
 import { createRouter } from "next-connect";
 import db from "utils/db";
 import Cart from "models/Cart";
-import Product from "models/Product";
 import bodyParser from "body-parser";
 
 const router = createRouter();
 
 router
   .get(async (req, res) => {
-    await db.conectDb();
-
     try {
+      await db.conectDb();
       const { id } = req.query;
-
       // Find the user's cart
       const cart = await Cart.findOne({ user: id }).populate("items.product");
 
@@ -43,25 +40,20 @@ router
     try {
       const { id } = req.query;
 
-      const { updatedItem } = req.body;
+      const { data } = req.body;
 
-      // Find the user's cart
-      const cart = await Cart.findOneAndUpdate(
-        { _id: id, "items._id": updatedItem._id },
-        { $set: { "items.$": updatedItem } },
-        { new: true }
-      ).populate("items.product");
+      const cart = await Cart.updateOne({ _id: id }, { $set: { items: data } });
 
       if (cart) {
         res.status(200).send({
-          status: "success",
+          ok: true,
           message: "Cart updated successfully!",
           data: cart,
         });
       } else {
         res.status(500).json({
-          status: "fail",
-          message: "Cart update failed!",
+          ok: false,
+          message: "Cart update fail!",
         });
       }
     } catch (err) {

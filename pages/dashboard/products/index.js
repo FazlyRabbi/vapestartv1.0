@@ -66,6 +66,7 @@ function index() {
     brand: "",
     unit: "pcs",
     slug: "",
+    Flavour: [],
   };
 
   const [product, setProduct] = useState(inital);
@@ -78,6 +79,13 @@ function index() {
     });
 
     setProduct({ ...product, slug });
+  };
+
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    let flavours = value.split(",").map((flavor) => flavor.trim());
+    // Update the flavors array with the new input value
+    setProduct({ ...product, Flavour: flavours });
   };
 
   useEffect(() => {
@@ -100,8 +108,6 @@ function index() {
     if (data) {
       setProducts(data);
       setFilteredProducts(data);
-
-      console.log(data);
     }
   }, [data]);
 
@@ -351,6 +357,15 @@ function index() {
                       </Option>
                     </Select>
                   </div>
+
+                  <Input
+                    required
+                    type="text"
+                    disabled={isFatching}
+                    label="Flavour: input flavour by comma"
+                    className=" "
+                    onChange={handleInputChange}
+                  />
 
                   <Input
                     required

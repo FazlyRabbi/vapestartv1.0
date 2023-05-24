@@ -8,13 +8,16 @@ import { useRouter } from "next/router";
 import { ProductsContext } from "@/context/productsContext";
 import { useState, useContext, useEffect } from "react";
 
+
 export default function SingleProduct({ params }) {
+
   const { productsQuery } = useContext(ProductsContext);
 
   const { data, isLoading, isError } = productsQuery;
 
   const [singleProduct, setSingleProduct] = useState(null);
 
+  
   useEffect(() => {
     if (data) {
       const filteredProduct = data?.find(
@@ -23,6 +26,7 @@ export default function SingleProduct({ params }) {
       setSingleProduct(filteredProduct);
     }
   }, [data]);
+
 
   return (
     <section>

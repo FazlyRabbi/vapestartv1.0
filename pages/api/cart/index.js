@@ -43,44 +43,76 @@ router
       await cart.save();
 
       res.status(200).json({
-        status: "success",
+        ok: true,
         message: "cart created successfully!",
         data: cart,
       });
     } catch (err) {
       res.status(500).json({
-        status: "fail",
+        ok: false,
         message: "Data not instered!",
         error: err.message,
       });
     }
   })
   .get(async (req, res) => {
-
     await db.conectDb();
 
     try {
-      
       const { user } = req.query;
       // Find the user's cart
       const cart = await Cart.findOne({ user }).populate("items.product");
 
       if (cart) {
         res.status(200).send({
-          status: "success",
+          ok: true,
           message: "Cart found successfully!",
           data: cart,
         });
       } else {
         res.status(500).json({
-          status: "fail",
+          ok: false,
           message: "Cart Not Found!",
         });
       }
       // return data to client
     } catch (err) {
       res.status(500).json({
-        status: "fail",
+        ok: false,
+        message: "Data not instered!",
+        error: err.message,
+      });
+    }
+  })
+  .put(async (req, res) => {
+    await db.conectDb();
+
+    try {
+
+      const [updatedItem] = req.body;
+
+      const cart = await Cart.findOneAndUpdate(
+        { user: id },
+        { $set: { "items.$": updatedItem } },
+        { new: true }
+      ).populate("items.product");
+
+      if (cart) {
+        res.status(200).send({
+          ok: true,
+          message: "Cart found successfully!",
+          data: cart,
+        });
+      } else {
+        res.status(500).json({
+          ok: false,
+          message: "Cart Not Found!",
+        });
+      }
+      // return data to client
+    } catch (err) {
+      res.status(500).json({
+        ok: false,
         message: "Data not instered!",
         error: err.message,
       });

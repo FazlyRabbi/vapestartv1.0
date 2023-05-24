@@ -1,13 +1,13 @@
 import { FaStar } from "react-icons/fa";
-import product1 from "/img/prod01-1-min-copyright-500x598.jpg";
 import Image from "next/image";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import Magnifier from "react-magnifier";
 import Link from "next/link";
-
+import useSweetAlert from "@/components/lib/sweetalert2";
 import { useSession } from "next-auth/react";
+import { CartContext } from "@/context/cartContext";
 
 const init = {
   user: "",
@@ -16,15 +16,21 @@ const init = {
   flavour: "",
 };
 
+const { showAlert } = useSweetAlert();
+
 export default function ProductPrimaryDetails({ data }) {
+  const { refetch } = useContext(CartContext);
+
+  // showing alert
   const [cart, setCart] = useState(init);
 
   const { user, product, quantity, flavour } = cart;
 
+  const [isFatching, setIsFatching] = useState(false);
+
   if (!data) return;
 
   // handle add to cart
-
   useEffect(() => {
     if (data) {
       setCart({ ...cart, product: data._id, user: "64620016c9e619ab7aa4f4a8" });
@@ -32,15 +38,49 @@ export default function ProductPrimaryDetails({ data }) {
   }, [data]);
 
   const handleAddToCart = async () => {
+    if (cart.flavour === "") {
+      showAlert({
+        icon: "warning",
+        title: "select a flavour!",
+        showConfirmButton: true,
+        // timer: 1000,
+      });
+
+      return;
+    }
+
+    setIsFatching(true);
+
     const response = await fetch(`http://localhost:3000/api/cart`, {
       method: "POST",
+
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify(cart),
     });
 
     const data = await response.json();
+
+    if (response.ok) {
+      setIsFatching(false);
+      refetch();
+      showAlert({
+        icon: "success",
+        title: "cart added successfully!",
+        showConfirmButton: true,
+        // timer: 1000,
+      });
+    } else {
+      showAlert({
+        icon: "fail",
+        title: "cart added fail!",
+        showConfirmButton: true,
+        // timer: 1000,
+      });
+      setIsFatching(false);
+    }
   };
 
   return (
@@ -124,12 +164,17 @@ export default function ProductPrimaryDetails({ data }) {
               />
             </div>
 
-            <Link href={`/cart`}>
+            <Link href={`#`}>
               <button
+                disabled={isFatching}
                 onClick={() => handleAddToCart()}
                 className="text-[20px]  bg-primary rounded-sm py-2 px-4 font-eco font-bold  text-white"
               >
-                Add To Cart
+                {isFatching ? (
+                  <span className="  animate-pulse">loading...</span>
+                ) : (
+                  <span> Add To Cart</span>
+                )}
               </button>
             </Link>
           </div>

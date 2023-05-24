@@ -8,9 +8,12 @@ import { Instagram } from "react-content-loader";
 
 function NewCollections() {
   const { productsQuery } = useContext(ProductsContext);
+
   const { data, isLoading, isError } = productsQuery;
 
   const [newCollections, setNewCollections] = useState([]);
+
+
 
   useEffect(() => {
     if (data) {

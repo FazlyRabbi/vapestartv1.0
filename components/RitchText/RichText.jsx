@@ -25,7 +25,7 @@ function RichText({ setProduct, product }) {
     <>
       <ReactQuill
         value={product.description}
-        className="h-[11rem] min-h-[5rem]  mb-2"
+        className="h-[20rem] min-h-[20rem]  mb-2"
         onChange={handleValueChange}
         modules={{ toolbar: toolbarOptions }}
         placeholder="Type something here..."
